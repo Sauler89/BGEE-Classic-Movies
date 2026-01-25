@@ -279,6 +279,15 @@ LAF patch_Baldur_config END
 LAF patch_movidesc END
 INCLUDE "BGEEClassicMovies/lib/fixes.tpa"
 
+ACTION_IF GAME_IS "bgee" BEGIN
+  COPY_EXISTING ~BGEE.LUA~ ~override~
+    REPLACE_TEXTUALLY ~{'intro', 719, 779,~ ~{'intro', 569, 629,~
+    REPLACE_TEXTUALLY ~{'intro', 809, 869,~ ~{'intro', 618, 668,~
+    REPLACE_TEXTUALLY ~{'intro', 889, 959,~ ~{'intro', 669, 741,~
+    REPLACE_TEXTUALLY ~{'intro', 949, 989,~ ~{'intro', 760, 820,~
+  BUT_ONLY
+END
+
 BEGIN @4//Add missing movies
 SUBCOMPONENT @2//Restore BG1 movies to BG:EE
 REQUIRE_PREDICATE GAME_IS "bgee eet" @3//This mod is only available for BG:EE
