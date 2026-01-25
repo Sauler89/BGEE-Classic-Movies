@@ -41,7 +41,7 @@ ALWAYS
       "CAMP"     => "219662"  //[Movie]Bandit Camp
       "CNDLKEEP" => "219663"  //[Movie]Inside Candlekeep
       "CREDITS"  => "9999997" //[Movie]Credits
-      "DAYNITE"  => "225275"  //Sunset movie
+      "DAYNITE_" => "225275"  //Sunset movie
       "DEATHAND" => "225282"  //Death
       "DUNGEON"  => "219664"  //[Movie]The Dungeon
       "DURLAG"   => "224075"  //[Movie]Entering Durlag's Tower
@@ -56,7 +56,7 @@ ALWAYS
       "LOGO"     => "9999999" //[Movie]Beamdog Logo
       "MINEFLOD" => "219671"  //[Movie]The Flooded Mine
       "NASHKELL" => "219672"  //[Movie]Entering Nashkel
-      "NITEDAY"  => "225274"  //Sunrise movie
+      "NITEDAY_" => "225274"  //Sunrise movie
       "PALACE"   => "219673"  //[Movie]The Ducal Palace
       "REST"     => "225292"  //Resting Outside
       "RESTDUNG" => "225293"  //Resting in Dungeon
@@ -258,7 +258,17 @@ ACTION_PHP_EACH dirs AS src => target BEGIN
   MKDIR ~%target%~
   ACTION_BASH_FOR "%src_1%" ".*\.wbm$" BEGIN
     ACTION_IF FILE_EXISTS "%src%/%BASH_FOR_FILE%" BEGIN
-      COPY_LARGE "%src%/%BASH_FOR_FILE%" "%target%/%BASH_FOR_FILE%"
+      ACTION_IF GAME_IS ~eet~ BEGIN
+        ACTION_IF "%BASH_FOR_FILE%" STR_EQ "DAYNITE.WBM" BEGIN
+          COPY_LARGE "%src%/%BASH_FOR_FILE%" "%target%/daynite_.wbm"
+        END ELSE ACTION_IF "%BASH_FOR_FILE%" STR_EQ "NITEDAY.WBM" BEGIN
+          COPY_LARGE "%src%/%BASH_FOR_FILE%" "%target%/niteday_.wbm"
+        END ELSE BEGIN
+          COPY_LARGE "%src%/%BASH_FOR_FILE%" "%target%/%BASH_FOR_FILE%"
+        END
+      END ELSE BEGIN
+        COPY_LARGE "%src%/%BASH_FOR_FILE%" "%target%/%BASH_FOR_FILE%"
+      END
     END ELSE BEGIN
       COPY_LARGE "%src_1%/%BASH_FOR_FILE%" "%target%/%BASH_FOR_FILE%"
     END
